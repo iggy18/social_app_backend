@@ -20,14 +20,14 @@ router.post('/', async (req, res)=>{
         console.trace(result);
         res.json(result);
     } catch (e) {
-        res.status(400).json({ error : "username and email should be unique" })
+        res.status(400).json({ error : "could not post message" })
     }
 
 });
 
 //list
 router.get('/', async (req, res)=>{
-    const allPosts = await prisma.socialPost.findMany();
+    const allPosts = await prisma.socialPost.findMany({ include: {user: true} });
     res.json(allPosts);
 })
 
