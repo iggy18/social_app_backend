@@ -7,14 +7,14 @@ const prisma = new PrismaClient();
 //socialpost
 //create
 router.post('/', async (req, res)=>{
-    const { content, image, user } = req.body;
+    const { content, image, userId } = req.body;
     console.log(req.body);
     try{
         const result = await prisma.socialPost.create({
             data: {
                 content,
                 image,
-                user
+                userId // use authorized user later
             },
         });
         console.trace(result);
