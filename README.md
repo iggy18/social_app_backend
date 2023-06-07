@@ -7,6 +7,10 @@ user routes done
 todo:
 social post routes
 
-update:
-this api is being tested with thunder client. 
-all crud operations working
+*update:*
+
+
+-this api is being tested with thunder client. 
+
+
+-all crud operations working
