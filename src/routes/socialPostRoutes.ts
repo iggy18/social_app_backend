@@ -27,14 +27,29 @@ router.post('/', async (req, res)=>{
 
 //list
 router.get('/', async (req, res)=>{
-    const allPosts = await prisma.socialPost.findMany({ include: {user: true} });
+    const allPosts = await prisma.socialPost.findMany({ 
+        // include related user record
+        include: {
+            user: {
+                // this nested select will choose feilds on related object.
+                select: {
+                    id: true,
+                    name: true,
+                    image: true
+                }
+            }
+        }
+    });
     res.json(allPosts);
 })
 
 //get a socialPost
 router.get('/:id', async (req, res) =>{
     const { id } = req.params;
-    const socialPost = await prisma.socialPost.findUnique({ where : {id :Number(id) } });
+    const socialPost = await prisma.socialPost.findUnique({ 
+        where : {id :Number(id) },
+        include: {user: true}
+    });
     res.json(socialPost);
 })
 
