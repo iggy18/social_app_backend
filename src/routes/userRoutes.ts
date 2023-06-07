@@ -34,7 +34,28 @@ router.get('/', async (req, res)=>{
 //get a user
 router.get('/:id', async (req, res) =>{
     const { id } = req.params;
-    const user = await prisma.user.findUnique({ where : {id :Number(id) } });
+    const user = await prisma.user.findUnique({ 
+        where : {id :Number(id) },
+        // you can use include here to get all fields on social post. nested selects work as well
+        select: { 
+            id: true,
+            name: true,
+            email: true,
+            username: true,
+            image: true,
+            bio: true,
+            socialPosts: {
+                // nested select specifies which fields to include for the related object
+                select: {
+                    id: true,
+                    content: true,
+                    image: true,
+                    createdAt: true,
+                    updatedAt: true
+                }
+            }
+        },
+    });
     res.json(user);
 })
 
